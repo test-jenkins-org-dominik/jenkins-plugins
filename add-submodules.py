@@ -4,9 +4,6 @@ import requests
 
 github_url = 'https://github.com/jenkinsci/'
 
-valid = 0
-invalid = 0
-
 def addGitSubmodule(plugin_name):
     bashCommand = "git submodule add " + github_url + plugin_name
     process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
@@ -23,16 +20,11 @@ with open('plugins.txt') as file:
         if plugin_name.endswith('plugin'):
             response = requests.get(github_url + plugin_name)
             if response.status_code == 200:
-                valid += 1
+                addGitSubmodule(plugin_name)
         else:
             plugin_name += '-plugin'
             response = requests.get(github_url + plugin_name)
             if response.status_code == 200:
-                valid += 1
+                addGitSubmodule(plugin_name)
             else:
                 print(plugin_name)
-                invalid += 1
-
-
-print("Valid " + str(valid))
-print("Invalid " + str(invalid))
