@@ -47,7 +47,8 @@ jobs:
         languages: ${{ matrix.language }}
 
     - run: |
-        ls -l
+        cd ./github-oauth-plugin
+        mvn clean install
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
